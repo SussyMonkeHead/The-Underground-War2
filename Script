@@ -1,0 +1,958 @@
+ local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/xHeptc/Kavo-UI-Library/main/source.lua"))()
+    local Window = Library.CreateLib("The Underground War", "Sentinel")
+ 
+
+
+
+    local Tab = Window:NewTab("Main")
+    local Section = Tab:NewSection("Main")
+
+Section:NewButton("BypassAntiCheat", "BypassAntiCheat", function()
+    wait(1)
+    game:GetService("Players").LocalPlayer.PlayerGui.Embarass:Destroy()
+wait(0.3)
+game:GetService("Players").LocalPlayer.PlayerGui.Main.AntiCheat:Destroy()
+wait(0.3)
+game:GetService("Players").LocalPlayer.PlayerGui.Main.TeleportControl:Destroy()
+wait(0.2)
+game:GetService("StarterGui"):SetCore("SendNotification", {Title = "The Underground War Gui", Text = "Anti-CheatBypassed in 2.3333334Seconds"})
+end)
+ 
+    Section:NewSlider("set Speed", "SPEEEED!!", 500, 0, function(s) -- 500 (MaxValue) | 0 (MinValue)
+        game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = s
+    end)
+ 
+ 
+    Section:NewSlider("set Jump", "SPEEEED!!", 500, 0, function(s) -- 500 (MaxValue) | 0 (MinValue)
+        game.Players.LocalPlayer.Character.Humanoid.JumpPower = s
+    end)
+
+Section:NewButton("Fly", "Press x to stop and start Flying", function()
+game:GetService("StarterGui"):SetCore("SendNotification", {Title = "The Underground War Gui", Text = "Use x to fly and unfly repress when you die"})   
+ repeat wait()
+  until game.Players.LocalPlayer and game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character:findFirstChild("Torso") and game.Players.LocalPlayer.Character:findFirstChild("Humanoid")
+local mouse = game.Players.LocalPlayer:GetMouse()
+repeat wait() until mouse
+local plr = game.Players.LocalPlayer
+local torso = plr.Character.Torso
+local flying = true
+local deb = true
+local ctrl = {f = 0, b = 0, l = 0, r = 0}
+local lastctrl = {f = 0, b = 0, l = 0, r = 0}
+local maxspeed = 50
+local speed = 0
+
+function Fly()
+local bg = Instance.new("BodyGyro", torso)
+bg.P = 9e4
+bg.maxTorque = Vector3.new(9e9, 9e9, 9e9)
+bg.cframe = torso.CFrame
+local bv = Instance.new("BodyVelocity", torso)
+bv.velocity = Vector3.new(0,0.1,0)
+bv.maxForce = Vector3.new(9e9, 9e9, 9e9)
+repeat wait()
+plr.Character.Humanoid.PlatformStand = true
+if ctrl.l + ctrl.r ~= 0 or ctrl.f + ctrl.b ~= 0 then
+speed = speed+.5+(speed/maxspeed)
+if speed > maxspeed then
+speed = maxspeed
+end
+elseif not (ctrl.l + ctrl.r ~= 0 or ctrl.f + ctrl.b ~= 0) and speed ~= 0 then
+speed = speed-1
+if speed < 0 then
+speed = 0
+end
+end
+if (ctrl.l + ctrl.r) ~= 0 or (ctrl.f + ctrl.b) ~= 0 then
+bv.velocity = ((game.Workspace.CurrentCamera.CoordinateFrame.lookVector * (ctrl.f+ctrl.b)) + ((game.Workspace.CurrentCamera.CoordinateFrame * CFrame.new(ctrl.l+ctrl.r,(ctrl.f+ctrl.b)*.2,0).p) - game.Workspace.CurrentCamera.CoordinateFrame.p))*speed
+lastctrl = {f = ctrl.f, b = ctrl.b, l = ctrl.l, r = ctrl.r}
+elseif (ctrl.l + ctrl.r) == 0 and (ctrl.f + ctrl.b) == 0 and speed ~= 0 then
+bv.velocity = ((game.Workspace.CurrentCamera.CoordinateFrame.lookVector * (lastctrl.f+lastctrl.b)) + ((game.Workspace.CurrentCamera.CoordinateFrame * CFrame.new(lastctrl.l+lastctrl.r,(lastctrl.f+lastctrl.b)*.2,0).p) - game.Workspace.CurrentCamera.CoordinateFrame.p))*speed
+else
+bv.velocity = Vector3.new(0,0.1,0)
+end
+bg.cframe = game.Workspace.CurrentCamera.CoordinateFrame * CFrame.Angles(-math.rad((ctrl.f+ctrl.b)*50*speed/maxspeed),0,0)
+until not flying
+ctrl = {f = 0, b = 0, l = 0, r = 0}
+lastctrl = {f = 0, b = 0, l = 0, r = 0}
+speed = 0
+bg:Destroy()
+bv:Destroy()
+plr.Character.Humanoid.PlatformStand = false
+end
+mouse.KeyDown:connect(function(key)
+if key:lower() == "x" then
+if flying then flying = false
+else
+flying = true
+Fly()
+end
+elseif key:lower() == "w" then
+ctrl.f = 1
+elseif key:lower() == "s" then
+ctrl.b = -1
+elseif key:lower() == "a" then
+ctrl.l = -1
+elseif key:lower() == "d" then
+ctrl.r = 1
+end
+end)
+mouse.KeyUp:connect(function(key)
+if key:lower() == "w" then
+ctrl.f = 0
+elseif key:lower() == "s" then
+ctrl.b = 0
+elseif key:lower() == "a" then
+ctrl.l = 0
+elseif key:lower() == "d" then
+ctrl.r = 0
+end
+end)
+Fly()
+end)
+Section:NewButton("Switch To Red team", "Switch your team easy noob", function()
+    game:GetService("Lighting").GameModel.Events.Events.ChooseTeam:FireServer(2)  -- red
+Print"Player is now on red team"
+end)
+Section:NewButton("Switch To Blue team", "Switch your team easy noob", function()
+    game:GetService("Lighting").GameModel.Events.Events.ChooseTeam:FireServer(1)  -- Blue
+Print"Player is now on Blue team"
+end)
+ 
+local Tab = Window:NewTab("KillALL")
+    local Section = Tab:NewSection("UPSET?")
+Section:NewButton("KillAll for 60seconds", "KILLEVERYONE NO LIMIT TAKE OUT YOUR SWORD", function()
+    game:GetService("StarterGui"):SetCore("SendNotification", {Title = "KillALL", Text = "KillALL loaded successfully!"})
+game:GetService("StarterGui"):SetCore("SendNotification", {Title = "KillALL", Text = "Its Recomended you reset or leave After this"})
+ 
+ local worksonokill = Instance.new("Part")
+worksonokill.Transparency = 0.7
+worksonokill.Anchored = true
+worksonokill.Name = "CRM"
+worksonokill.Position = Vector3.new(-23.5362, 370.356, 57.1454)
+worksonokill.Size =  Vector3.new(1000, 4, 1000)
+worksonokill.Parent = game.Workspace
+wait(5)
+ local Plr = game.Players.LocalPlayer
+    local char = Plr.Character
+                char.HumanoidRootPart.CFrame = CFrame.new(-23.5362, 380, 57.1454)
+ game:GetService("StarterGui"):SetCore("SendNotification", {Title = "Heads UP!!", Text = "Its recomend that you leave AFTER YOUR DONE!"})
+ 
+--// Message \\--
+    --[[
+        The original script wasnt made by me [doge#7202]
+        I just forked the script and added a keybind to change the range.
+        The original script creator is epzi
+        Make sure to tweak the settings to your likings
+        Have a great day!
+        [Forked version of script made by doge#7202 on discord]
+    ]]
+ 
+    --// Setting \\--
+    local range = 10000 --The deafult range for the script
+    local rangeAddkeybind = Enum.KeyCode.E --Change the "E" to the keybind you want to use to add range.
+    local rangeSubtractkeybind = Enum.KeyCode.Q --Change the "Q" to the keybind you want to use to subtract range.
+    local TogglePreciseRange = Enum.KeyCode.BackSlash --Change the "BackSlash" to the key you want to toggle precise range
+    local DoNotDisturb = false --If its on true, the script will notifiy you if your range has been changed. if its false then it doesnt notify.
+    local PreciseRange = false --Keep this off if you dont want your range value to have numbers that go into the 0.01's.
+ 
+    --// Variable \\--
+    local player = game:GetService("Players").LocalPlayer
+    local UIS = game:GetService("UserInputService")
+    local CoreGui = game:GetService("StarterGui")
+ 
+    --// Keybind Functions \\--
+    UIS.InputBegan:connect(function(input)
+        if input.KeyCode == rangeSubtractkeybind then
+            if PreciseRange == true then
+                range = range - 2
+            else
+                range = range - 10
+            end
+            wait()
+            if DoNotDisturb == false then
+                game:GetService("StarterGui"):SetCore("SendNotification", {Title = "Notification", Text = "the range was set to"..range})
+            end
+        end
+    end)
+ 
+    UIS.InputBegan:connect(function(input)
+        if input.KeyCode == rangeAddkeybind then
+            if PreciseRange == true then
+                range = range + 2
+            else
+                range = range + 10
+            end
+            wait()
+            if DoNotDisturb == false then
+                game:GetService("StarterGui"):SetCore("SendNotification", {Title = "Notification", Text = "the range was set to"..range})
+            end
+        end
+    end)
+ 
+    UIS.InputBegan:connect(function(input)
+        if input.KeyCode == TogglePreciseRange then
+            if PreciseRange == false then
+                PreciseRange = true
+                if DoNotDisturb == false then
+                    game:GetService("StarterGui"):SetCore("SendNotification", {Title = "Notification", Text = "the Precise range was set to true"})
+                end
+            else
+                PreciseRange = false
+                if DoNotDisturb == false then
+                    game:GetService("StarterGui"):SetCore("SendNotification", {Title = "Notification", Text = "the Precise range was set to false"})
+                end
+            end
+ 
+        end
+    end)
+ 
+    --// Script \\--
+    game:GetService("RunService").RenderStepped:Connect(function()
+        local p = game.Players:GetPlayers()
+        for i = 2, #p do local v = p[i].Character
+            if v and v:FindFirstChild("Humanoid") and v.Humanoid.Health > 0 and v:FindFirstChild("HumanoidRootPart") and player:DistanceFromCharacter(v.HumanoidRootPart.Position) <= range then
+                local tool = player.Character and player.Character:FindFirstChildOfClass("Tool")
+                if tool and tool:FindFirstChild("Handle") then
+                    tool:Activate()
+                    for i,v in next, v:GetChildren() do
+                        if v:IsA("BasePart") then
+                            firetouchinterest(tool.Handle,v,0)
+                            firetouchinterest(tool.Handle,v,1)
+                        end
+                    end
+                end
+            end
+        end
+    end)
+ 
+    if DoNotDisturb == false then
+        game:GetService("StarterGui"):SetCore("SendNotification", {Title = "Killaura Load", Text = "killaura loaded successfully!"})
+    end
+    loadstring(game:HttpGet("https://pastebin.com/raw/3VyxSCuK",true))();--https://pastebin.com/raw/3VyxSCuK 60s
+game:GetService("StarterGui"):SetCore("SendNotification", {Title = "KillALL", Text = "DONE!!!"})
+Wait(10)
+game:GetService("StarterGui"):SetCore("SendNotification", {Title = "KillALL", Text = "DONE!!!"})
+Wait(10)
+game:GetService("StarterGui"):SetCore("SendNotification", {Title = "KillALL", Text = "DONE!!!"})
+Wait(10)
+game:GetService("StarterGui"):SetCore("SendNotification", {Title = "KillALL", Text = "DONE!!!"})
+Wait(10)
+end)
+ 
+Section:NewButton("KILLALL FOR 120SECONDS", "KILLEVERYONE NO LIMIT TAKE OUT YOUR SWORD", function()
+    game:GetService("StarterGui"):SetCore("SendNotification", {Title = "KillALL", Text = "KillALL loaded successfully!"})
+game:GetService("StarterGui"):SetCore("SendNotification", {Title = "KillALL", Text = "Its Recomended you reset or leave After this"})
+ 
+ 
+local worksonokill = Instance.new("Part")
+worksonokill.Transparency = 0.7
+worksonokill.Anchored = true
+worksonokill.Name = "CRM"
+worksonokill.Position = Vector3.new(-23.5362, 370.356, 57.1454)
+worksonokill.Size =  Vector3.new(1000, 4, 1000)
+worksonokill.Parent = game.Workspace
+wait(5)
+ local Plr = game.Players.LocalPlayer
+    local char = Plr.Character
+                char.HumanoidRootPart.CFrame = CFrame.new(-23.5362, 380, 57.1454)
+ game:GetService("StarterGui"):SetCore("SendNotification", {Title = "Heads UP!!", Text = "Its recomend that you leave AFTER YOUR DONE!"})
+ 
+ 
+ 
+--// Message \\--
+    --[[
+        The original script wasnt made by me [doge#7202]
+        I just forked the script and added a keybind to change the range.
+        The original script creator is epzi
+        Make sure to tweak the settings to your likings
+        Have a great day!
+        [Forked version of script made by doge#7202 on discord]
+    ]]
+ 
+    --// Setting \\--
+    local range = 10000 --The deafult range for the script
+    local rangeAddkeybind = Enum.KeyCode.E --Change the "E" to the keybind you want to use to add range.
+    local rangeSubtractkeybind = Enum.KeyCode.Q --Change the "Q" to the keybind you want to use to subtract range.
+    local TogglePreciseRange = Enum.KeyCode.BackSlash --Change the "BackSlash" to the key you want to toggle precise range
+    local DoNotDisturb = false --If its on true, the script will notifiy you if your range has been changed. if its false then it doesnt notify.
+    local PreciseRange = false --Keep this off if you dont want your range value to have numbers that go into the 0.01's.
+ 
+    --// Variable \\--
+    local player = game:GetService("Players").LocalPlayer
+    local UIS = game:GetService("UserInputService")
+    local CoreGui = game:GetService("StarterGui")
+ 
+    --// Keybind Functions \\--
+    UIS.InputBegan:connect(function(input)
+        if input.KeyCode == rangeSubtractkeybind then
+            if PreciseRange == true then
+                range = range - 2
+            else
+                range = range - 10
+            end
+            wait()
+            if DoNotDisturb == false then
+                game:GetService("StarterGui"):SetCore("SendNotification", {Title = "Notification", Text = "the range was set to"..range})
+            end
+        end
+    end)
+ 
+    UIS.InputBegan:connect(function(input)
+        if input.KeyCode == rangeAddkeybind then
+            if PreciseRange == true then
+                range = range + 2
+            else
+                range = range + 10
+            end
+            wait()
+            if DoNotDisturb == false then
+                game:GetService("StarterGui"):SetCore("SendNotification", {Title = "Notification", Text = "the range was set to"..range})
+            end
+        end
+    end)
+ 
+    UIS.InputBegan:connect(function(input)
+        if input.KeyCode == TogglePreciseRange then
+            if PreciseRange == false then
+                PreciseRange = true
+                if DoNotDisturb == false then
+                    game:GetService("StarterGui"):SetCore("SendNotification", {Title = "Notification", Text = "the Precise range was set to true"})
+                end
+            else
+                PreciseRange = false
+                if DoNotDisturb == false then
+                    game:GetService("StarterGui"):SetCore("SendNotification", {Title = "Notification", Text = "the Precise range was set to false"})
+                end
+            end
+ 
+        end
+    end)
+ 
+    --// Script \\--
+    game:GetService("RunService").RenderStepped:Connect(function()
+        local p = game.Players:GetPlayers()
+        for i = 2, #p do local v = p[i].Character
+            if v and v:FindFirstChild("Humanoid") and v.Humanoid.Health > 0 and v:FindFirstChild("HumanoidRootPart") and player:DistanceFromCharacter(v.HumanoidRootPart.Position) <= range then
+                local tool = player.Character and player.Character:FindFirstChildOfClass("Tool")
+                if tool and tool:FindFirstChild("Handle") then
+                    tool:Activate()
+                    for i,v in next, v:GetChildren() do
+                        if v:IsA("BasePart") then
+                            firetouchinterest(tool.Handle,v,0)
+                            firetouchinterest(tool.Handle,v,1)
+                        end
+                    end
+                end
+            end
+        end
+    end)
+ 
+    if DoNotDisturb == false then
+        game:GetService("StarterGui"):SetCore("SendNotification", {Title = "Killaura Load", Text = "killaura loaded successfully!"})
+    end
+    loadstring(game:HttpGet("https://pastebin.com/raw/WYpV77Eg",true))();--
+game:GetService("StarterGui"):SetCore("SendNotification", {Title = "KillALL", Text = "DONE!!!"})
+Wait(10)
+game:GetService("StarterGui"):SetCore("SendNotification", {Title = "KillALL", Text = "DONE!!!"})
+Wait(10)
+game:GetService("StarterGui"):SetCore("SendNotification", {Title = "KillALL", Text = "DONE!!!"})
+Wait(10)
+game:GetService("StarterGui"):SetCore("SendNotification", {Title = "KillALL", Text = "DONE!!!"})
+Wait(10)
+end)
+ 
+Section:NewButton("KILLALL LOOP", "KILLEVERYONE NO LIMIT TAKE OUT YOUR SWORD", function()
+    game:GetService("StarterGui"):SetCore("SendNotification", {Title = "KillALL", Text = "KillALL loaded successfully!"})
+game:GetService("StarterGui"):SetCore("SendNotification", {Title = "KillALL", Text = "Its Recomended you reset or leave After this"})
+ 
+ local worksonokill = Instance.new("Part")
+worksonokill.Transparency = 0.7
+worksonokill.Anchored = true
+worksonokill.Name = "CRM"
+worksonokill.Position = Vector3.new(-23.5362, 370.356, 57.1454)
+worksonokill.Size =  Vector3.new(1000, 4, 1000)
+worksonokill.Parent = game.Workspace
+wait(5)
+ local Plr = game.Players.LocalPlayer
+    local char = Plr.Character
+                char.HumanoidRootPart.CFrame = CFrame.new(-23.5362, 380, 57.1454)
+ game:GetService("StarterGui"):SetCore("SendNotification", {Title = "Heads UP!!", Text = "Its recomend that you leave AFTER YOUR DONE!"})
+ 
+ 
+ 
+--// Message \\--
+    --[[
+        The original script wasnt made by me [doge#7202]
+        I just forked the script and added a keybind to change the range.
+        The original script creator is epzi
+        Make sure to tweak the settings to your likings
+        Have a great day!
+        [Forked version of script made by doge#7202 on discord]
+    ]]
+ 
+    --// Setting \\--
+    local range = 10000 --The deafult range for the script
+    local rangeAddkeybind = Enum.KeyCode.E --Change the "E" to the keybind you want to use to add range.
+    local rangeSubtractkeybind = Enum.KeyCode.Q --Change the "Q" to the keybind you want to use to subtract range.
+    local TogglePreciseRange = Enum.KeyCode.BackSlash --Change the "BackSlash" to the key you want to toggle precise range
+    local DoNotDisturb = false --If its on true, the script will notifiy you if your range has been changed. if its false then it doesnt notify.
+    local PreciseRange = false --Keep this off if you dont want your range value to have numbers that go into the 0.01's.
+ 
+    --// Variable \\--
+    local player = game:GetService("Players").LocalPlayer
+    local UIS = game:GetService("UserInputService")
+    local CoreGui = game:GetService("StarterGui")
+ 
+    --// Keybind Functions \\--
+    UIS.InputBegan:connect(function(input)
+        if input.KeyCode == rangeSubtractkeybind then
+            if PreciseRange == true then
+                range = range - 2
+            else
+                range = range - 10
+            end
+            wait()
+            if DoNotDisturb == false then
+                game:GetService("StarterGui"):SetCore("SendNotification", {Title = "Notification", Text = "the range was set to"..range})
+            end
+        end
+    end)
+ 
+    UIS.InputBegan:connect(function(input)
+        if input.KeyCode == rangeAddkeybind then
+            if PreciseRange == true then
+                range = range + 2
+            else
+                range = range + 10
+            end
+            wait()
+            if DoNotDisturb == false then
+                game:GetService("StarterGui"):SetCore("SendNotification", {Title = "Notification", Text = "the range was set to"..range})
+            end
+        end
+    end)
+ 
+    UIS.InputBegan:connect(function(input)
+        if input.KeyCode == TogglePreciseRange then
+            if PreciseRange == false then
+                PreciseRange = true
+                if DoNotDisturb == false then
+                    game:GetService("StarterGui"):SetCore("SendNotification", {Title = "Notification", Text = "the Precise range was set to true"})
+                end
+            else
+                PreciseRange = false
+                if DoNotDisturb == false then
+                    game:GetService("StarterGui"):SetCore("SendNotification", {Title = "Notification", Text = "the Precise range was set to false"})
+                end
+            end
+ 
+        end
+    end)
+ 
+    --// Script \\--
+    game:GetService("RunService").RenderStepped:Connect(function()
+        local p = game.Players:GetPlayers()
+        for i = 2, #p do local v = p[i].Character
+            if v and v:FindFirstChild("Humanoid") and v.Humanoid.Health > 0 and v:FindFirstChild("HumanoidRootPart") and player:DistanceFromCharacter(v.HumanoidRootPart.Position) <= range then
+                local tool = player.Character and player.Character:FindFirstChildOfClass("Tool")
+                if tool and tool:FindFirstChild("Handle") then
+                    tool:Activate()
+                    for i,v in next, v:GetChildren() do
+                        if v:IsA("BasePart") then
+                            firetouchinterest(tool.Handle,v,0)
+                            firetouchinterest(tool.Handle,v,1)
+                        end
+                    end
+                end
+            end
+        end
+    end)
+ 
+    if DoNotDisturb == false then
+        game:GetService("StarterGui"):SetCore("SendNotification", {Title = "Killaura Load", Text = "killaura loaded successfully!"})
+    end
+ 
+loadstring(game:HttpGet("https://raw.githubusercontent.com/fish2651/forever/main/nonstop",true))();--
+game:GetService("StarterGui"):SetCore("SendNotification", {Title = "KillALL", Text = "DONE!!!"})
+Wait(10)
+game:GetService("StarterGui"):SetCore("SendNotification", {Title = "KillALL", Text = "DONE!!!"})
+Wait(10)
+game:GetService("StarterGui"):SetCore("SendNotification", {Title = "KillALL", Text = "DONE!!!"})
+Wait(10)
+game:GetService("StarterGui"):SetCore("SendNotification", {Title = "KillALL", Text = "DONE!!!"})
+Wait(10)
+end)
+ 
+    local Tab = Window:NewTab("AutoFarm")
+    local Section = Tab:NewSection("AutoFarm")
+ 
+    Section:NewToggle("RedTeamAutoFarm", "RedTeamAutoFarm Farms Flags fast", function(state)
+    if state then
+        getgenv().RedTeamFarm = true;
+
+while wait() do
+wait(0.5)
+if getgenv().RedTeamFarm == true then
+wait(0.2)  
+      local Plr = game.Players.LocalPlayer
+    local char = Plr.Character
+                char.HumanoidRootPart.CFrame = CFrame.new(6.5, 15, -73.5)--tower1 RED 55.1228, 3.4, 224.536
+    wait(0.4)
+ 
+        local Plr = game.Players.LocalPlayer
+    local char = Plr.Character
+                char.HumanoidRootPart.CFrame = CFrame.new(-7.5, 15, 75.5)--tower1 RED
+ end
+end
+    else
+       getgenv().RedTeamFarm = false;
+while wait() do
+wait(2)
+print"False"
+end
+
+
+end
+end)
+ 
+Section:NewToggle("BlueTeamAutoFarm", "BlueTeamAutoFarm AutoFarmsTheFlag", function(state)
+    if state then
+getgenv().BlueTeamFarm = true;
+
+while wait() do
+wait(0.5)
+if getgenv().BlueTeamFarm == true then
+wait(0.2) 
+
+local Plr = game.Players.LocalPlayer
+local char = Plr.Character
+            char.HumanoidRootPart.CFrame = CFrame.new(-7.5, 15, 75.5)--tower1 RED
+     
+    wait(0.4)
+    local Plr = game.Players.LocalPlayer
+    local char = Plr.Character
+                char.HumanoidRootPart.CFrame = CFrame.new(6.5, 15, -73.5)--tower1 RED 55.1228, 3.4, 224.536
+
+ end
+end
+    else
+       getgenv().BlueTeamFarm = false;
+while wait() do
+wait(2)
+print"False"
+end
+
+
+end
+end)
+
+ 
+    local Tab = Window:NewTab("KillAura")
+    local Section = Tab:NewSection("KillAura")
+ 
+    Section:NewButton("KillAura", "First open your sword press e and q to add or subtract", function()
+        --// Message \\--
+    --[[
+        The original script wasnt made by me [doge#7202]
+        I just forked the script and added a keybind to change the range.
+        The original script creator is epzi
+        Make sure to tweak the settings to your likings
+        Have a great day!
+        [Forked version of script made by doge#7202 on discord]
+    ]]
+ 
+    --// Setting \\--
+    local range = 15 --The deafult range for the script
+    local rangeAddkeybind = Enum.KeyCode.E --Change the "E" to the keybind you want to use to add range.
+    local rangeSubtractkeybind = Enum.KeyCode.Q --Change the "Q" to the keybind you want to use to subtract range.
+    local TogglePreciseRange = Enum.KeyCode.BackSlash --Change the "BackSlash" to the key you want to toggle precise range
+    local DoNotDisturb = false --If its on true, the script will notifiy you if your range has been changed. if its false then it doesnt notify.
+    local PreciseRange = false --Keep this off if you dont want your range value to have numbers that go into the 0.01's.
+ 
+    --// Variable \\--
+    local player = game:GetService("Players").LocalPlayer
+    local UIS = game:GetService("UserInputService")
+    local CoreGui = game:GetService("StarterGui")
+ 
+    --// Keybind Functions \\--
+    UIS.InputBegan:connect(function(input)
+        if input.KeyCode == rangeSubtractkeybind then
+            if PreciseRange == true then
+                range = range - 2
+            else
+                range = range - 10
+            end
+            wait()
+            if DoNotDisturb == false then
+                game:GetService("StarterGui"):SetCore("SendNotification", {Title = "Notification", Text = "the range was set to"..range})
+            end
+        end
+    end)
+ 
+    UIS.InputBegan:connect(function(input)
+        if input.KeyCode == rangeAddkeybind then
+            if PreciseRange == true then
+                range = range + 2
+            else
+                range = range + 10
+            end
+            wait()
+            if DoNotDisturb == false then
+                game:GetService("StarterGui"):SetCore("SendNotification", {Title = "Notification", Text = "the range was set to"..range})
+            end
+        end
+    end)
+ 
+    UIS.InputBegan:connect(function(input)
+        if input.KeyCode == TogglePreciseRange then
+            if PreciseRange == false then
+                PreciseRange = true
+                if DoNotDisturb == false then
+                    game:GetService("StarterGui"):SetCore("SendNotification", {Title = "Notification", Text = "the Precise range was set to true"})
+                end
+            else
+                PreciseRange = false
+                if DoNotDisturb == false then
+                    game:GetService("StarterGui"):SetCore("SendNotification", {Title = "Notification", Text = "the Precise range was set to false"})
+                end
+            end
+ 
+        end
+    end)
+ 
+    --// Script \\--
+    game:GetService("RunService").RenderStepped:Connect(function()
+        local p = game.Players:GetPlayers()
+        for i = 2, #p do local v = p[i].Character
+            if v and v:FindFirstChild("Humanoid") and v.Humanoid.Health > 0 and v:FindFirstChild("HumanoidRootPart") and player:DistanceFromCharacter(v.HumanoidRootPart.Position) <= range then
+                local tool = player.Character and player.Character:FindFirstChildOfClass("Tool")
+                if tool and tool:FindFirstChild("Handle") then
+                    tool:Activate()
+                    for i,v in next, v:GetChildren() do
+                        if v:IsA("BasePart") then
+                            firetouchinterest(tool.Handle,v,0)
+                            firetouchinterest(tool.Handle,v,1)
+                        end
+                    end
+                end
+            end
+        end
+    end)
+ 
+    if DoNotDisturb == false then
+        game:GetService("StarterGui"):SetCore("SendNotification", {Title = "Killaura Load", Text = "killaura loaded successfully!"})
+    end
+    end)
+    local Section = Tab:NewSection("Esp")
+    Section:NewButton("ESP", "You can see players in the map", function()
+        local Holder = Instance.new("Folder", game.CoreGui)
+    Holder.Name = "ESP"
+ 
+    local Box = Instance.new("BoxHandleAdornment")
+    Box.Name = "nilBox"
+    Box.Size = Vector3.new(4, 7, 4)
+    Box.Color3 = Color3.new(100 / 255, 100 / 255, 100 / 255)
+    Box.Transparency = 0.8
+    Box.ZIndex = 0
+    Box.AlwaysOnTop = true
+    Box.Visible = true
+ 
+    local NameTag = Instance.new("BillboardGui")
+    NameTag.Name = "nilNameTag"
+    NameTag.Enabled = false
+    NameTag.Size = UDim2.new(0, 200, 0, 50)
+    NameTag.AlwaysOnTop = true
+    NameTag.StudsOffset = Vector3.new(0, 1.8, 0)
+    local Tag = Instance.new("TextLabel", NameTag)
+    Tag.Name = "Tag"
+    Tag.BackgroundTransparency = 1
+    Tag.Position = UDim2.new(0, -50, 0, 0)
+    Tag.Size = UDim2.new(0, 300, 0, 20)
+    Tag.TextSize = 20
+    Tag.TextColor3 = Color3.new(100 / 255, 100 / 255, 100 / 255)
+    Tag.TextStrokeColor3 = Color3.new(0 / 255, 0 / 255, 0 / 255)
+    Tag.TextStrokeTransparency = 0.8
+    Tag.Text = "nil"
+    Tag.Font = Enum.Font.SourceSansBold
+    Tag.TextScaled = false
+ 
+    local LoadCharacter = function(v)
+        repeat wait() until v.Character ~= nil
+        v.Character:WaitForChild("Humanoid")
+        local vHolder = Holder:FindFirstChild(v.Name)
+        vHolder:ClearAllChildren()
+        local b = Box:Clone()
+        b.Name = v.Name .. "Box"
+        b.Adornee = v.Character
+        b.Parent = vHolder
+        local t = NameTag:Clone()
+        t.Name = v.Name .. "NameTag"
+        t.Enabled = true
+        t.Parent = vHolder
+        t.Adornee = v.Character:WaitForChild("Head", 5)
+        if not t.Adornee then
+            return UnloadCharacter(v)
+        end
+        t.Tag.Text = v.Name
+        b.Color3 = Color3.new(v.TeamColor.r, v.TeamColor.g, v.TeamColor.b)
+        t.Tag.TextColor3 = Color3.new(v.TeamColor.r, v.TeamColor.g, v.TeamColor.b)
+        local Update
+        local UpdateNameTag = function()
+            if not pcall(function()
+                v.Character.Humanoid.DisplayDistanceType = Enum.HumanoidDisplayDistanceType.None
+                local maxh = math.floor(v.Character.Humanoid.MaxHealth)
+                local h = math.floor(v.Character.Humanoid.Health)
+                t.Tag.Text = v.Name .. "\n" .. ((maxh ~= 0 and tostring(math.floor((h / maxh) * 100))) or "0") .. "%  " .. tostring(h) .. "/" .. tostring(maxh)
+            end) then
+                Update:Disconnect()
+            end
+        end
+        UpdateNameTag()
+        Update = v.Character.Humanoid.Changed:Connect(UpdateNameTag)
+    end
+ 
+    local UnloadCharacter = function(v)
+        local vHolder = Holder:FindFirstChild(v.Name)
+        if vHolder and (vHolder:FindFirstChild(v.Name .. "Box") ~= nil or vHolder:FindFirstChild(v.Name .. "NameTag") ~= nil) then
+            vHolder:ClearAllChildren()
+        end
+    end
+ 
+    local LoadPlayer = function(v)
+        local vHolder = Instance.new("Folder", Holder)
+        vHolder.Name = v.Name
+        v.CharacterAdded:Connect(function()
+            pcall(LoadCharacter, v)
+        end)
+        v.CharacterRemoving:Connect(function()
+            pcall(UnloadCharacter, v)
+        end)
+        v.Changed:Connect(function(prop)
+            if prop == "TeamColor" then
+                UnloadCharacter(v)
+                wait()
+                LoadCharacter(v)
+            end
+        end)
+        LoadCharacter(v)
+    end
+ 
+    local UnloadPlayer = function(v)
+        UnloadCharacter(v)
+        local vHolder = Holder:FindFirstChild(v.Name)
+        if vHolder then
+            vHolder:Destroy()
+        end
+    end
+ 
+    for i,v in pairs(game:GetService("Players"):GetPlayers()) do
+        spawn(function() pcall(LoadPlayer, v) end)
+    end
+ 
+    game:GetService("Players").PlayerAdded:Connect(function(v)
+        pcall(LoadPlayer, v)
+    end)
+ 
+    game:GetService("Players").PlayerRemoving:Connect(function(v)
+        pcall(UnloadPlayer, v)
+    end)
+ 
+    game:GetService("Players").LocalPlayer.NameDisplayDistance = 0
+    end)
+ 
+    local Tab = Window:NewTab("MapSettings")
+    local Section = Tab:NewSection("Settings")
+ 
+    Section:NewButton("Remove dirt from underground", "This function removes the DirtBlock in teh under ground press it again when theres a new round", function()
+        while true do --removes that shit in the tunnels
+                Game.Workspace.GameBase.Underground.DirtBlock:Destroy()
+    end
+ 
+    end)
+Section:NewButton("Removes the Wall sprateing the teams", "This function removes the Wall  press it again when theres a new round", function()
+        while true do --removes that shit in the tunnels
+                Game.Workspace.GameBase.Map.Wall:Destroy()
+    end
+ 
+    end)
+Section:NewButton("Removes Extra shit you dont need", "It dose nothing much i like it", function()
+        while true do --removes that shit in the tunnels
+                Game.Workspace.GameBase.Map.Tree:Destroy()
+wait(3)
+ 
+    end
+    end)
+ 
+ 
+    Section:NewButton("Removes a killblock", "so it dose not kill you", function()
+        while true do --removes that shit in the tunnels
+                Game.Workspace.oldjoke:Destroy()
+    end
+    end)
+ 
+    Section:NewButton("Fullbright", "Makes everything less Dark", function()
+        -- FULLBRIGHT by ricey#7090
+    pcall(function()
+        local lighting = game:GetService("Lighting");
+        lighting.Ambient = Color3.fromRGB(255, 255, 255);
+        lighting.Brightness = 1;
+        lighting.FogEnd = 1e10;
+        for i, v in pairs(lighting:GetDescendants()) do
+            if v:IsA("BloomEffect") or v:IsA("BlurEffect") or v:IsA("ColorCorrectionEffect") or v:IsA("SunRaysEffect") then
+                v.Enabled = false;
+            end;
+        end;
+        lighting.Changed:Connect(function()
+            lighting.Ambient = Color3.fromRGB(255, 255, 255);
+            lighting.Brightness = 1;
+            lighting.FogEnd = 1e10;
+        end);
+        spawn(function()
+            local character = game:GetService("Players").LocalPlayer.Character;
+            while wait() do
+                repeat wait() until character ~= nil;
+                if not character.HumanoidRootPart:FindFirstChildWhichIsA("PointLight") then
+                    local headlight = Instance.new("PointLight", character.HumanoidRootPart);
+                    headlight.Brightness = 1;
+                    headlight.Range = 60;
+                end;
+            end;
+        end);
+    end)
+    end)
+ 
+Section:NewButton("A PeaceFul place to work", "Makes a part and teleports you to it so you can have peace and not be killed", function()
+ local player = game:GetService("Players").LocalPlayer
+    local CoreGui = game:GetService("StarterGui")
+  game:GetService("StarterGui"):SetCore("SendNotification", {Title = "Work with peace", Text = " loaded successfully!"})
+ local worksonokill = Instance.new("Part")
+worksonokill.Transparency = 0.2
+worksonokill.Anchored = true
+worksonokill.Name = "CRM"
+worksonokill.Position = Vector3.new(-957.895, 693.933, 308.955)
+worksonokill.Size =  Vector3.new(12, 12, 12)
+worksonokill.Parent = game.Workspace
+wait(5)
+ local Plr = game.Players.LocalPlayer
+    local char = Plr.Character
+                char.HumanoidRootPart.CFrame = CFrame.new(-957.969, 702.933, 308.388)
+ game:GetService("StarterGui"):SetCore("SendNotification", {Title = "Heads UP!!", Text = " After 300Seconds the part will destroy Just re luanch it!"})
+wait(300)
+Game.Workspace.CRM:Destroy()
+end)
+ 
+    local Tab = Window:NewTab("Teleports")
+    local Section = Tab:NewSection("Teleports")
+    local Section = Tab:NewSection("RedTeam Teleports")
+    Section:NewButton("RedTeam Spwan1", "Teleport to red team spwan", function()
+        local Plr = game.Players.LocalPlayer
+    local char = Plr.Character
+                char.HumanoidRootPart.CFrame = CFrame.new(-69, 13, 12)--redTeam1
+    end)
+ 
+    Section:NewButton("RedTeam Spwan2", "Teleport to red team spwan", function()
+        local Plr = game.Players.LocalPlayer
+    local char = Plr.Character
+                char.HumanoidRootPart.CFrame = CFrame.new(-59, 14.2, 141)--redTeam2
+    end)
+ 
+    Section:NewButton("RedTeam Spwan3", "Teleport to red team spwan", function()
+        local Plr = game.Players.LocalPlayer
+    local char = Plr.Character
+                char.HumanoidRootPart.CFrame = CFrame.new(83, 14.2, 53)--redTeam3
+    end)
+ 
+    Section:NewButton("RedTeam Tower1", "Teleport to redteam Tower1", function()
+        local Plr = game.Players.LocalPlayer
+    local char = Plr.Character
+                char.HumanoidRootPart.CFrame = CFrame.new(26.7696, 63.8, 66.6277)--tower1 RED
+    end)
+ 
+ 
+ 
+    Section:NewButton("RedTeam Tower2", "Teleport to red team Tower1", function()
+        local Plr = game.Players.LocalPlayer
+    local char = Plr.Character
+                char.HumanoidRootPart.CFrame = CFrame.new(-69.4608, 63.8, 35.2228)--tower2 RED
+    end)
+ 
+    Section:NewButton("QUICK STEAL RED FLAG", "Teleport and steal red flag wait a couple of seconds before giveing the flag", function()
+wait(0.2)  
+        local Plr = game.Players.LocalPlayer
+    local char = Plr.Character
+                char.HumanoidRootPart.CFrame = CFrame.new(-7.5, 15, 75.5)--tower1 RED
+
+wait(0.4)
+      local Plr = game.Players.LocalPlayer
+    local char = Plr.Character
+                char.HumanoidRootPart.CFrame = CFrame.new(6.5, 15, -73.5)--tower1 RED 55.1228, 3.4, 224.536
+    
+ 
+
+    end)
+ 
+ 
+    local Section = Tab:NewSection("BlueTeam Teleports")
+    Section:NewButton("BlueTeam Spwan1", "Teleport to BlueTeam Spwan1", function()
+        local Plr = game.Players.LocalPlayer
+    local char = Plr.Character
+                char.HumanoidRootPart.CFrame = CFrame.new(47, 13, -133)--Spwan1 Blue
+    end)
+ 
+    Section:NewButton("BlueTeam Spwan2", "Teleport to BlueTeam Spwan2", function()
+         local Plr = game.Players.LocalPlayer
+    local char = Plr.Character
+                char.HumanoidRootPart.CFrame = CFrame.new(-80, 13, -54)--Spwan2 Blue
+    end)
+ 
+    Section:NewButton("BlueTeam Spwan3", "Teleport to BlueTeam Spwan3", function()
+         local Plr = game.Players.LocalPlayer
+    local char = Plr.Character
+                char.HumanoidRootPart.CFrame = CFrame.new(70, 13, -12)--Spwan3 Blue
+    end)
+ 
+    Section:NewButton("BlueTeam Tower1", "Teleport to BlueTeam Tower1", function()
+        local Plr = game.Players.LocalPlayer
+    local char = Plr.Character
+                char.HumanoidRootPart.CFrame = CFrame.new(69.2533, 64.0757, -35.462)--Tower1 Blue
+    end)
+ 
+    Section:NewButton("BlueTeam Tower2", "Teleport to BlueTeam Tower2", function()
+            local Plr = game.Players.LocalPlayer
+    local char = Plr.Character
+                char.HumanoidRootPart.CFrame = CFrame.new(-29.0692, 63.8, -65.1652)--Tower2 Blue
+    end)
+ 
+ 
+    Section:NewButton("QUICK STEAL BLUE FLAG", "Teleport and steal BLUE flag wait a couple of seconds before giveing the flag", function()
+wait(0.2)  
+      local Plr = game.Players.LocalPlayer
+    local char = Plr.Character
+                char.HumanoidRootPart.CFrame = CFrame.new(6.5, 15, -73.5)--tower1 RED 55.1228, 3.4, 224.536
+    wait(0.4)
+ 
+        local Plr = game.Players.LocalPlayer
+    local char = Plr.Character
+                char.HumanoidRootPart.CFrame = CFrame.new(-7.5, 15, 75.5)--tower1 RED
+ 
+    end)
+ 
+   local Tab = Window:NewTab("Settings")
+local Section = Tab:NewSection("Settings")
+
+Section:NewKeybind("Setkeybind to open or close", "bababy code", Enum.KeyCode.F, function()
+	Library:ToggleUI()
+end)
+Section:NewButton("Copy Discord link:)", "simd", function()
+        setclipboard("https://discord.gg/ja5g4ym7WB")
+    toclipboard("https://discord.gg/ja5g4ym7WB")
+    end)
+ 
+ 
+    local player = game:GetService("Players").LocalPlayer
+    local CoreGui = game:GetService("StarterGui")
+ 
+    game:GetService("StarterGui"):SetCore("SendNotification", {Title = "The Underground War", Text = " loaded successfully!"})
+    wait(10)
+    game:GetService("StarterGui"):SetCore("SendNotification", {Title = "The Underground War Gui", Text = " Join My Discord for more Guis!"})
