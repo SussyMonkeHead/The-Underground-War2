@@ -945,8 +945,8 @@ Section:NewKeybind("Setkeybind to open or close", "bababy code", Enum.KeyCode.F,
 	Library:ToggleUI()
 end)
 Section:NewButton("Copy Discord link:)", "simd", function()
-        setclipboard("https://discord.gg/ja5g4ym7WB")
-    toclipboard("https://discord.gg/ja5g4ym7WB")
+        setclipboard("https://discord.gg/MWz95V6EVd")
+    toclipboard("https://discord.gg/MWz95V6EVd")
     end)
  
  
